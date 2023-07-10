@@ -3,14 +3,14 @@ if(ROS_EDITION STREQUAL "ROS1")
 
   # Copyright(c) 2019 livoxtech limited.
 
-  cmake_minimum_required(VERSION 3.0)
+  cmake_minimum_required(VERSION 3.0) # 指定cmake的最低版本
 
 
   #---------------------------------------------------------------------------------------
   # Start livox_ros_driver2 project
   #---------------------------------------------------------------------------------------
-  include(cmake/version.cmake)
-  project(livox_ros_driver2 VERSION ${LIVOX_ROS_DRIVER2_VERSION} LANGUAGES CXX)
+  include(cmake/version.cmake) #导入重复语句
+  project(livox_ros_driver2 VERSION ${LIVOX_ROS_DRIVER2_VERSION} LANGUAGES CXX) # 定义工程名称，指定工程版本，支持语言
   message(STATUS "livox_ros_driver2 version: ${LIVOX_ROS_DRIVER2_VERSION}")
 
   #---------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ if(ROS_EDITION STREQUAL "ROS1")
   )
 
   #---------------------------------------------------------------------------------------
-  # include file
+  # include file 头文件
   #---------------------------------------------------------------------------------------
   target_include_directories(${PROJECT_NAME}_node
     PUBLIC
@@ -188,21 +188,25 @@ else(ROS_EDITION STREQUAL "ROS2")
 
   # Copyright(c) 2020 livoxtech limited.
 
-  cmake_minimum_required(VERSION 3.14)
-  project(livox_ros_driver2)
+  cmake_minimum_required(VERSION 3.14)# 规定cmake最低版本要求
+  project(livox_ros_driver2)# 项目名称
 
   # Default to C99
   if(NOT CMAKE_C_STANDARD)
-    set(CMAKE_C_STANDARD 99)
+    set(CMAKE_C_STANDARD 99) # 启动对C 99标准的支持
   endif()
 
   # Default to C++14
   if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 14)# 启动对Cpp 14标准的支持
   endif()
 
-  list(INSERT CMAKE_MODULE_PATH 0 "${PROJECT_SOURCE_DIR}/cmake/modules")
 
+  #CMAKE_MODULE_PATH是以分号分隔的列表，供include()或 find_package()使用。初始为空，由用户设定
+  list(INSERT CMAKE_MODULE_PATH 0 "${PROJECT_SOURCE_DIR}/cmake/modules")#模块
+
+  # CMAKE_COMPILER_IS_GNUCXX 判断编译器类型,如果是gcc编译器
+  # CMAKE_CXX_COMPILER_ID MATCHES "Clang" 判断编译器是不是 clang
   if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic -Wno-unused-parameter)
   endif()
